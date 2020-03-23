@@ -11,7 +11,13 @@ module Fastlane
 
         UI.message("Login to App Store Connect (#{params[:username]})")
         Spaceship::Tunes.login(params[:username])
-        Spaceship::Tunes.select_team
+        if params[:team_id]
+          Spaceship::Tunes.select_team(team_id: params[:team_id])
+        elsif params[:team_name]
+          Spaceship::Tunes.select_team(team_name: params[:team_name])
+        else
+          Spaceship::Tunes.select_team
+        end
         UI.message("Login successful")
 
         # Get App
